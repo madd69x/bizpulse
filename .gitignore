@@ -1,0 +1,25 @@
+# BizPulse .gitignore
+
+# Never commit API keys
+.env
+.env.local
+.env.*.local
+config.local.js
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (if used for local server)
+node_modules/
+package-lock.json
+
+# Build output
+dist/
+build/
