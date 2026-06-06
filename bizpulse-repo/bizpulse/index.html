@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BizPulse — AI Business Health Monitor</title>
+  <meta name="description" content="Describe your business situation in plain language. Get an AI-powered health diagnosis, risk alerts, and a 7-day action plan instantly." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+  <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="logo">
+          <div class="logo-icon"><i class="ti ti-activity-heartbeat"></i></div>
+          <span class="logo-name">BizPulse</span>
+          <span class="logo-badge">AI-Powered</span>
+        </div>
+        <nav class="header-nav">
+          <a href="#how-it-works">How it works</a>
+          <a href="https://github.com/YOUR_USERNAME/bizpulse" target="_blank" class="btn-outline">
+            <i class="ti ti-brand-github"></i> GitHub
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-badge"><i class="ti ti-sparkles"></i> FlowZint AI Hackathon 2026</div>
+        <h1>Know your business health<br /><span class="accent">before it's too late</span></h1>
+        <p class="hero-sub">Describe your situation in plain language. BizPulse diagnoses the real problems, flags hidden risks, and generates a concrete 7-day battle plan — powered by Claude AI.</p>
+        <a href="#analyzer" class="btn-primary">Run free analysis <i class="ti ti-arrow-right"></i></a>
+      </div>
+    </section>
+
+    <!-- Stats bar -->
+    <div class="stats-bar">
+      <div class="container stats-inner">
+        <div class="stat"><strong>4</strong> categories analyzed</div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>7-day</strong> action plan</div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>Real-time</strong> AI diagnosis</div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>0</strong> sign-ups needed</div>
+      </div>
+    </div>
+
+    <!-- Main Analyzer -->
+    <section class="analyzer" id="analyzer">
+      <div class="container">
+        <div class="analyzer-card">
+
+          <!-- Input Phase -->
+          <div id="inputPhase">
+            <div class="analyzer-header">
+              <h2>Describe your business situation</h2>
+              <p>Be specific — include numbers, timeframes, team size, revenue, and what's worrying you most.</p>
+            </div>
+
+            <textarea
+              id="situationInput"
+              class="situation-box"
+              placeholder="e.g. My D2C skincare brand has been running for 8 months. Revenue was ₹4L/month but dropped to ₹1.8L last month. We have 3 employees. Ad spend is eating 40% of revenue. Customers love the product but repeat orders are low. I'm running low on capital and unsure whether to raise prices or cut marketing..."
+            ></textarea>
+
+            <div class="quick-picks">
+              <span class="qp-label">Try an example:</span>
+              <button class="qpick" data-key="startup">Early-stage startup</button>
+              <button class="qpick" data-key="ecom">E-commerce drop</button>
+              <button class="qpick" data-key="saas">SaaS churn</button>
+              <button class="qpick" data-key="retail">Retail slowdown</button>
+              <button class="qpick" data-key="agency">Agency losing clients</button>
+            </div>
+
+            <div class="input-footer">
+              <span class="char-count" id="charCount">0 characters</span>
+              <button class="btn-primary" id="analyzeBtn">
+                <i class="ti ti-radar"></i> Run health analysis
+              </button>
+            </div>
+            <div class="error-box" id="errorBox" style="display:none;"></div>
+          </div>
+
+          <!-- Loading Phase -->
+          <div id="loadingPhase" style="display:none;">
+            <div class="loading-state">
+              <div class="pulse-rings">
+                <div class="ring r1"></div>
+                <div class="ring r2"></div>
+                <div class="ring r3"></div>
+                <div class="ring-center"><i class="ti ti-activity-heartbeat"></i></div>
+              </div>
+              <p class="loading-msg" id="loadingMsg">Diagnosing your business...</p>
+              <div class="loading-steps" id="loadingSteps">
+                <span class="step active" data-step="0">Reading situation</span>
+                <span class="step" data-step="1">Identifying risks</span>
+                <span class="step" data-step="2">Scoring health</span>
+                <span class="step" data-step="3">Building plan</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Results Phase -->
+          <div id="resultsPhase" style="display:none;">
+
+            <div class="results-header">
+              <div class="results-title-row">
+                <h2>Business Health Report</h2>
+                <button class="btn-ghost" id="resetBtn"><i class="ti ti-refresh"></i> New analysis</button>
+              </div>
+              <p class="results-timestamp" id="reportTime"></p>
+            </div>
+
+            <!-- Health Score -->
+            <div class="health-card" id="healthCard">
+              <div class="health-left">
+                <div class="score-ring-wrap">
+                  <svg class="score-ring" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" class="ring-bg" />
+                    <circle cx="50" cy="50" r="40" class="ring-fill" id="scoreRingFill" />
+                  </svg>
+                  <div class="score-inside">
+                    <span class="score-num" id="scoreNum">--</span>
+                    <span class="score-max">/100</span>
+                  </div>
+                </div>
+                <div class="health-meta">
+                  <div class="health-label" id="healthLabel">--</div>
+                  <div class="health-summary" id="healthSummary"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- KPIs -->
+            <div class="section">
+              <div class="section-label">Key metrics snapshot</div>
+              <div class="kpi-grid" id="kpiGrid"></div>
+            </div>
+
+            <!-- Risks -->
+            <div class="section">
+              <div class="section-label">Risk signals</div>
+              <div class="risks-list" id="risksList"></div>
+            </div>
+
+            <!-- 7-Day Plan -->
+            <div class="section">
+              <div class="section-label">7-day battle plan</div>
+              <div class="plan-list" id="planList"></div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-grid">
+              <button class="action-card" id="actionDeep">
+                <i class="ti ti-calculator"></i>
+                <span>Deep financial analysis</span>
+              </button>
+              <button class="action-card" id="actionPitch">
+                <i class="ti ti-presentation"></i>
+                <span>Draft investor pitch</span>
+              </button>
+              <button class="action-card" id="actionRoadmap">
+                <i class="ti ti-map-2"></i>
+                <span>30-day roadmap</span>
+              </button>
+              <button class="action-card" id="actionExport">
+                <i class="ti ti-download"></i>
+                <span>Export report</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+      <div class="container">
+        <h2 class="section-heading">How it works</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-num">01</div>
+            <h3>Describe your situation</h3>
+            <p>Type your business situation in plain language — revenue, team size, challenges, and what's worrying you.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">02</div>
+            <h3>AI diagnoses in seconds</h3>
+            <p>Claude AI analyzes your input, extracts key metrics, identifies risk signals, and calculates your health score.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">03</div>
+            <h3>Get your battle plan</h3>
+            <p>Receive a structured 7-day action plan with specific, prioritized steps tailored to your exact situation.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">04</div>
+            <h3>Go deeper with AI</h3>
+            <p>Ask for financial deep-dives, investor pitches, or 30-day roadmaps — all grounded in your diagnosis.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-logo">
+          <div class="logo-icon sm"><i class="ti ti-activity-heartbeat"></i></div>
+          <span>BizPulse</span>
+        </div>
+        <p class="footer-note">Built for FlowZint AI Hackathon 2026 · Powered by Anthropic Claude</p>
+        <div class="footer-links">
+          <a href="https://github.com/YOUR_USERNAME/bizpulse" target="_blank"><i class="ti ti-brand-github"></i> GitHub</a>
+          <a href="https://flowzint.in/2026/ai/hackothon" target="_blank">FlowZint Portal</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="src/samples.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
