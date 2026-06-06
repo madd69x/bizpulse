@@ -128,7 +128,8 @@ async function callClaude(situationText) {
       // NOTE: In production, proxy this through your backend.
       // Never expose your API key in client-side code.
       // For local dev, set your key here or use a proxy.
-      // 'x-api-key': 'YOUR_API_KEY_HERE',
+      'x-api-key': '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',
+'anthropic-version': '2023-06-01',
     },
     body: JSON.stringify({
       model: MODEL,
